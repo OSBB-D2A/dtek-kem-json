@@ -65,7 +65,6 @@ def main():
         csrf = None
         for selector, attr in (
             ('meta[name="csrf-token"]', "content"),
-            ('meta[name="csrf-param"]', "content"),
             ('input[name="_csrf"]', "value"),
             ('input[name="_csrf-dtek-kem"]', "value"),
         ):
