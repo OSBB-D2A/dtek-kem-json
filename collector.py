@@ -17,8 +17,8 @@ OUT = Path("output")
 OUT.mkdir(exist_ok=True)
 
 CHALLENGE_MARKERS = (
-    "incapsula", "imperva", "captcha", "verify you are human",
-    "request unsuccessful", "access denied", "checking your browser",
+    "verify you are human", "request unsuccessful", "access denied",
+    "checking your browser", "incapsula incident id", "imperva incident id",
 )
 
 
@@ -95,41 +95,43 @@ def main():
             browser = p.chromium.launch(headless=True)
             try:
                 context = browser.new_context(
-                    user_agent=("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-                                "(KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"),
+                    user_agent=("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                                "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"),
                     locale="uk-UA", timezone_id="Europe/Kyiv",
                 )
                 for attempt in range(1, MAX_ATTEMPTS + 1):
                     page = context.new_page()
                     try:
                         print(f"INFO: завантаження сторінки, спроба {attempt}/{MAX_ATTEMPTS}")
-                        response = page.goto(PAGE_URL, wait_until="domcontentloaded", timeout=60000)
+                        response = page.goto(PAGE_URL, wait_until="networkidle", timeout=120000)
                         summary["page_status_code"] = response.status if response else None
                         summary["final_url"] = page.url
-                        try:
-                            page.wait_for_load_state("networkidle", timeout=12000)
-                        except Exception:
-                            pass
-                        page.wait_for_timeout(800)
+                        page.wait_for_timeout(500)
                         html = page.content()
                         summary["page_bytes"] = len(html.encode("utf-8"))
-                        if any(marker in html.lower() for marker in CHALLENGE_MARKERS):
-                            raise RuntimeError("Сайт повернув CAPTCHA/WAF challenge замість сторінки графіків.")
+                        summary["page_title"] = page.title()
+                        # Avoid scanning all HTML for generic words such as "captcha":
+                        # they can occur in scripts or unrelated page assets.
+                        if response and response.status >= 400:
+                            raise RuntimeError(f"Сторінка ДТЕК повернула HTTP {response.status}.")
+                        if any(marker in page.title().lower() for marker in CHALLENGE_MARKERS):
+                            raise RuntimeError("Заголовок сторінки вказує на CAPTCHA/WAF challenge.")
 
                         ajax = fetch_street_data(page)
                         summary["ajax_status_code"] = ajax["status"]
                         summary["ajax_url"] = ajax["url"]
                         summary["content_type"] = ajax["contentType"]
                         summary["response_bytes"] = len(ajax["text"].encode("utf-8"))
+                        summary["ajax_response_excerpt"] = re.sub(r"\s+", " ", ajax["text"][:500])
+                        if ajax["status"] < 200 or ajax["status"] >= 300:
+                            raise RuntimeError(f"AJAX повернув HTTP {ajax['status']}.")
                         try:
                             parsed = json.loads(ajax["text"])
                         except ValueError as exc:
-                            sample = re.sub(r"\s+", " ", ajax["text"][:240])
+                            sample = re.sub(r"\s+", " ", ajax["text"][:500])
                             if any(marker in ajax["text"].lower() for marker in CHALLENGE_MARKERS):
-                                raise RuntimeError("AJAX-відповідь містить CAPTCHA/WAF challenge, а не JSON.") from exc
+                                raise RuntimeError("AJAX-відповідь містить явні ознаки CAPTCHA/WAF challenge, а не JSON.") from exc
                             raise RuntimeError(f"AJAX-відповідь не є JSON. Початок: {sample!r}") from exc
-                        if ajax["status"] < 200 or ajax["status"] >= 300:
-                            raise RuntimeError(f"AJAX повернув HTTP {ajax['status']}.")
                         if not isinstance(parsed, dict) or parsed.get("result") is not True:
                             raise RuntimeError("DTEK повернув JSON без result: true.")
                         if not isinstance(parsed.get("data"), dict):
@@ -146,6 +148,9 @@ def main():
                                     "checked_at_utc": checked_at, "error": last_error,
                                     "summary": summary, "page_title": page.title(),
                                     "page_url": page.url, "html_excerpt": page.content()[:12000],
+                                    "ajax_response_excerpt": summary.get("ajax_response_excerpt"),
+                                    "ajax_status_code": summary.get("ajax_status_code"),
+                                    "ajax_content_type": summary.get("content_type"),
                                 })
                             except Exception:
                                 pass
