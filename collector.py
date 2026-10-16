@@ -2,164 +2,188 @@ import json
 import os
 import re
 import sys
+import time
 import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 
-import requests
-from bs4 import BeautifulSoup
+from playwright.sync_api import sync_playwright
 
 PAGE_URL = os.getenv("DTEK_URL", "https://www.dtek-kem.com.ua/ua/shutdowns")
 STREET = os.getenv("DTEK_STREET", "вул. Донця Михайла")
 TARGET_BUILDING = os.getenv("DTEK_BUILDING", "2A")
+MAX_ATTEMPTS = int(os.getenv("DTEK_MAX_ATTEMPTS", "3"))
 OUT = Path("output")
 OUT.mkdir(exist_ok=True)
 
+CHALLENGE_MARKERS = (
+    "incapsula", "imperva", "captcha", "verify you are human",
+    "request unsuccessful", "access denied", "checking your browser",
+)
+
 
 def save_json(path, data):
-    path.write_text(
-        json.dumps(data, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 def canonical_building(value):
-    """Normalize Latin/Cyrillic A and whitespace for keys such as 2A / 2А."""
     value = unicodedata.normalize("NFKC", str(value)).strip().casefold()
     value = value.replace("а", "a")
     return re.sub(r"\s+", "", value)
 
 
+def get_csrf(page):
+    for selector, attr in (
+        ('meta[name="csrf-token"]', "content"),
+        ('input[name="_csrf"]', "value"),
+        ('input[name="_csrf-dtek-kem"]', "value"),
+    ):
+        try:
+            value = page.locator(selector).first.get_attribute(attr, timeout=700)
+            if value:
+                return value
+        except Exception:
+            pass
+    return None
+
+
+def fetch_street_data(page):
+    # Run AJAX inside the real browser page to reuse its session cookies.
+    return page.evaluate(
+        """async ({street, csrf}) => {
+          const form = new URLSearchParams();
+          form.set('method', 'getHomeNum');
+          form.set('data[0][name]', 'street');
+          form.set('data[0][value]', street);
+          form.set('data[1][name]', 'updateFact');
+          const parts = new Intl.DateTimeFormat('en-GB', {
+            timeZone: 'Europe/Kyiv', day: '2-digit', month: '2-digit',
+            year: 'numeric', hour: '2-digit', minute: '2-digit',
+            hourCycle: 'h23'
+          }).formatToParts(new Date()).reduce((a, p) => (a[p.type] = p.value, a), {});
+          form.set('data[1][value]', parts.day + '.' + parts.month + '.' + parts.year + ' ' + parts.hour + ':' + parts.minute);
+          const headers = {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json, text/javascript, */*; q=0.01'
+          };
+          if (csrf) headers['X-CSRF-Token'] = csrf;
+          const response = await fetch('/ua/ajax', {
+            method: 'POST', credentials: 'same-origin', headers, body: form
+          });
+          return {
+            status: response.status,
+            url: response.url,
+            contentType: response.headers.get('content-type') || '',
+            text: await response.text()
+          };
+        }""",
+        {"street": STREET, "csrf": get_csrf(page)},
+    )
+
+
 def main():
     checked_at = datetime.now(timezone.utc).isoformat()
     summary = {
-        "checked_at_utc": checked_at,
-        "url": PAGE_URL,
-        "street": STREET,
+        "checked_at_utc": checked_at, "url": PAGE_URL, "street": STREET,
         "target_building": TARGET_BUILDING,
-        "success": False,
+        "method": "Playwright Chromium + same-origin AJAX", "success": False,
     }
-    session = requests.Session()
-    session.headers["User-Agent"] = (
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-        "(KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
-    )
-    challenge_markers = (
-        "incapsula", "imperva", "captcha", "verify you are human",
-        "request unsuccessful", "access denied",
-    )
-
     try:
-        page = session.get(PAGE_URL, timeout=25)
-        summary["page_status_code"] = page.status_code
-        summary["final_url"] = page.url
-        page.raise_for_status()
+        last_error = None
+        body = None
+        with sync_playwright() as p:
+            browser = p.chromium.launch(headless=True)
+            try:
+                context = browser.new_context(
+                    user_agent=("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+                                "(KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"),
+                    locale="uk-UA", timezone_id="Europe/Kyiv",
+                )
+                for attempt in range(1, MAX_ATTEMPTS + 1):
+                    page = context.new_page()
+                    try:
+                        print(f"INFO: завантаження сторінки, спроба {attempt}/{MAX_ATTEMPTS}")
+                        response = page.goto(PAGE_URL, wait_until="domcontentloaded", timeout=60000)
+                        summary["page_status_code"] = response.status if response else None
+                        summary["final_url"] = page.url
+                        try:
+                            page.wait_for_load_state("networkidle", timeout=12000)
+                        except Exception:
+                            pass
+                        page.wait_for_timeout(800)
+                        html = page.content()
+                        summary["page_bytes"] = len(html.encode("utf-8"))
+                        if any(marker in html.lower() for marker in CHALLENGE_MARKERS):
+                            raise RuntimeError("Сайт повернув CAPTCHA/WAF challenge замість сторінки графіків.")
 
-        if any(marker in page.text.lower() for marker in challenge_markers):
-            raise RuntimeError("Сайт повернув CAPTCHA/WAF challenge замість сторінки графіків.")
+                        ajax = fetch_street_data(page)
+                        summary["ajax_status_code"] = ajax["status"]
+                        summary["ajax_url"] = ajax["url"]
+                        summary["content_type"] = ajax["contentType"]
+                        summary["response_bytes"] = len(ajax["text"].encode("utf-8"))
+                        try:
+                            parsed = json.loads(ajax["text"])
+                        except ValueError as exc:
+                            sample = re.sub(r"\s+", " ", ajax["text"][:240])
+                            if any(marker in ajax["text"].lower() for marker in CHALLENGE_MARKERS):
+                                raise RuntimeError("AJAX-відповідь містить CAPTCHA/WAF challenge, а не JSON.") from exc
+                            raise RuntimeError(f"AJAX-відповідь не є JSON. Початок: {sample!r}") from exc
+                        if ajax["status"] < 200 or ajax["status"] >= 300:
+                            raise RuntimeError(f"AJAX повернув HTTP {ajax['status']}.")
+                        if not isinstance(parsed, dict) or parsed.get("result") is not True:
+                            raise RuntimeError("DTEK повернув JSON без result: true.")
+                        if not isinstance(parsed.get("data"), dict):
+                            raise RuntimeError("У відповіді DTEK немає об'єкта data з переліком будинків.")
+                        body = parsed
+                        summary["attempt"] = attempt
+                        break
+                    except Exception as exc:
+                        last_error = f"{type(exc).__name__}: {exc}"
+                        print(f"WARNING: спроба {attempt} не вдалася: {last_error}", file=sys.stderr)
+                        if attempt == MAX_ATTEMPTS:
+                            try:
+                                save_json(OUT / "diagnostics.json", {
+                                    "checked_at_utc": checked_at, "error": last_error,
+                                    "summary": summary, "page_title": page.title(),
+                                    "page_url": page.url, "html_excerpt": page.content()[:12000],
+                                })
+                            except Exception:
+                                pass
+                        else:
+                            time.sleep(2 * attempt)
+                    finally:
+                        page.close()
+                context.close()
+            finally:
+                browser.close()
 
-        soup = BeautifulSoup(page.text, "html.parser")
+        if body is None:
+            raise RuntimeError(last_error or "Не вдалося отримати дані DTEK.")
 
-        # Prefer the page's CSRF meta/input values; cookie fallback is only
-        # useful on sites that explicitly accept the cookie value as the token.
-        csrf = None
-        for selector, attr in (
-            ('meta[name="csrf-token"]', "content"),
-            ('input[name="_csrf"]', "value"),
-            ('input[name="_csrf-dtek-kem"]', "value"),
-        ):
-            node = soup.select_one(selector)
-            if node and node.get(attr):
-                csrf = node.get(attr)
-                break
-        if not csrf:
-            csrf = page.cookies.get("_csrf") or page.cookies.get("csrf")
-
-        ajax_node = soup.select_one('meta[name="ajaxUrl"]')
-        ajax_url = requests.compat.urljoin(
-            page.url, ajax_node.get("content") if ajax_node else "/ua/ajax"
-        )
-        payload = {
-            "method": "getHomeNum",
-            "data[0][name]": "street",
-            "data[0][value]": STREET,
-            "data[1][name]": "updateFact",
-            "data[1][value]": datetime.now().strftime("%d.%m.%Y %H:%M"),
-        }
-        headers = {
-            "Referer": page.url,
-            "X-Requested-With": "XMLHttpRequest",
-            "Accept": "application/json, text/javascript, */*; q=0.01",
-        }
-        if csrf:
-            headers["X-CSRF-Token"] = str(csrf)
-        session.headers.update(headers)
-
-        response = session.post(ajax_url, data=payload, timeout=25)
-        summary["ajax_status_code"] = response.status_code
-        summary["ajax_url"] = ajax_url
-        summary["content_type"] = response.headers.get("Content-Type", "")
-        summary["response_bytes"] = len(response.content)
-        response.raise_for_status()
-
-        try:
-            body = response.json()
-        except ValueError as exc:
-            sample = re.sub(r"\s+", " ", response.text[:240])
-            if any(marker in response.text.lower() for marker in challenge_markers):
-                raise RuntimeError("AJAX-відповідь містить CAPTCHA/WAF challenge, а не JSON.") from exc
-            raise RuntimeError(f"Відповідь не є JSON. Початок: {sample!r}") from exc
-
-        if not isinstance(body, dict) or body.get("result") is not True:
-            raise RuntimeError("DTEK повернув JSON без result: true.")
-
-        street_data = body.get("data")
-        if not isinstance(street_data, dict):
-            raise RuntimeError("У відповіді DTEK немає об'єкта data з переліком будинків.")
-
+        street_data = body["data"]
         update_timestamp = body.get("updateTimestamp")
         common = {
-            "checked_at_utc": checked_at,
-            "street": STREET,
-            "updateTimestamp": update_timestamp,
-            "source_url": PAGE_URL,
+            "checked_at_utc": checked_at, "street": STREET,
+            "updateTimestamp": update_timestamp, "source_url": PAGE_URL,
         }
-
-        # Keep the original complete response for diagnostics and compatibility.
         save_json(OUT / "dtek-response.json", body)
-
-        # Store every building returned for the street in a convenient wrapper.
         save_json(OUT / "dtek-street.json", {
-            **common,
-            "building_count": len(street_data),
-            "data": street_data,
+            **common, "building_count": len(street_data), "data": street_data,
         })
-
         target_key = canonical_building(TARGET_BUILDING)
         matched_key = next(
-            (key for key in street_data if canonical_building(key) == target_key),
-            None,
+            (key for key in street_data if canonical_building(key) == target_key), None,
         )
-        building_result = {
-            **common,
-            "requested_building": TARGET_BUILDING,
-            "found": matched_key is not None,
-            "matched_key": matched_key,
+        save_json(OUT / "dtek-2a.json", {
+            **common, "requested_building": TARGET_BUILDING,
+            "found": matched_key is not None, "matched_key": matched_key,
             "data": street_data.get(matched_key) if matched_key is not None else None,
-        }
-        save_json(OUT / "dtek-2a.json", building_result)
-
+        })
         summary.update({
             "success": True,
-            "saved_files": [
-                "output/dtek-response.json",
-                "output/dtek-street.json",
-                "output/dtek-2a.json",
-            ],
-            "building_count": len(street_data),
-            "target_building_found": matched_key is not None,
-            "target_building_key": matched_key,
-            "updateTimestamp": update_timestamp,
+            "saved_files": ["output/dtek-response.json", "output/dtek-street.json", "output/dtek-2a.json"],
+            "building_count": len(street_data), "target_building_found": matched_key is not None,
+            "target_building_key": matched_key, "updateTimestamp": update_timestamp,
             "top_level_keys": list(body.keys()),
         })
         print(f"OK: збережено {len(street_data)} записів по вулиці.")
@@ -168,14 +192,12 @@ def main():
         else:
             print(f"WARNING: будинок {TARGET_BUILDING} не знайдено серед ключів відповіді.")
         code = 0
-
     except Exception as exc:
         summary["error"] = f"{type(exc).__name__}: {exc}"
         print(f"ERROR: {summary['error']}", file=sys.stderr)
         code = 1
     finally:
         save_json(OUT / "run-summary.json", summary)
-
     return code
 
 
