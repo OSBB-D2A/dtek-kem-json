@@ -1,0 +1,20 @@
+{
+  "street": "вул. Донця Михайла",
+  "updateTimestamp": "20:48 16.10.2026",
+  "source_url": "https://www.dtek-kem.com.ua/ua/shutdowns",
+  "requested_building": "2A",
+  "found": true,
+  "matched_key": "2А",
+  "record_state": "source_fields_empty",
+  "data": {
+    "sub_type": "",
+    "start_date": "",
+    "end_date": "",
+    "type": "",
+    "sub_type_reason": [
+      "GPV24.1"
+    ],
+    "voluntarily": null,
+    "cek": null
+  }
+}
