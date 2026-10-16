@@ -6,7 +6,7 @@ on:
     - cron: "*/5 * * * *"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   collect:
@@ -37,3 +37,43 @@ jobs:
           path: output/
           if-no-files-found: warn
           retention-days: 14
+
+      # Publish only after a successful collection. Keep the data branch separate
+      # from main, and omit volatile collection timestamps from published JSON so
+      # unchanged source data does not create a commit every five minutes.
+      - name: Publish JSON to data branch
+        if: success()
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p /tmp/dtek-publish
+          cp output/dtek-response.json output/dtek-street.json output/dtek-2a.json /tmp/dtek-publish/
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path("/tmp/dtek-publish")
+          for name in ("dtek-street.json", "dtek-2a.json"):
+              path = root / name
+              data = json.loads(path.read_text(encoding="utf-8"))
+              data.pop("checked_at_utc", None)
+              path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          PY
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin data
+          git checkout data
+
+          mkdir -p output
+          cp /tmp/dtek-publish/dtek-response.json /tmp/dtek-publish/dtek-street.json /tmp/dtek-publish/dtek-2a.json output/
+
+          git add output/dtek-response.json output/dtek-street.json output/dtek-2a.json
+          if git diff --cached --quiet; then
+            echo "Опубліковані дані не змінилися — новий коміт не створюємо."
+            exit 0
+          fi
+
+          git commit -m "Update published DTEK data"
+          git push origin data
