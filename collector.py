@@ -171,31 +171,55 @@ def main():
             "checked_at_utc": checked_at, "street": STREET,
             "updateTimestamp": update_timestamp, "source_url": PAGE_URL,
         }
-        save_json(OUT / "dtek-response.json", body)
-        save_json(OUT / "dtek-street.json", {
-            **common, "building_count": len(street_data), "data": street_data,
-        })
         target_key = canonical_building(TARGET_BUILDING)
         matched_key = next(
             (key for key in street_data if canonical_building(key) == target_key), None,
         )
+        if matched_key is None:
+            summary.update({
+                "target_building_found": False,
+                "building_count": len(street_data),
+                "updateTimestamp": update_timestamp,
+            })
+            raise RuntimeError(
+                f"Будинок {TARGET_BUILDING} відсутній у відповіді DTEK; попередні файли не перезаписано."
+            )
+
+        target_data = street_data[matched_key]
+        if not isinstance(target_data, dict):
+            raise RuntimeError(
+                f"Запис будинку {matched_key!r} має неочікуваний формат; попередні файли не перезаписано."
+            )
+        outage_fields = ("sub_type", "start_date", "end_date", "type")
+        target_record_state = (
+            "source_fields_empty"
+            if all(not str(target_data.get(field) or "").strip() for field in outage_fields)
+            else "source_fields_present"
+        )
+
+        # Replace published data only after the response and target record are validated.
+        # Empty DTEK fields are preserved as-is and are not treated as a collector error.
+        save_json(OUT / "dtek-response.json", body)
+        save_json(OUT / "dtek-street.json", {
+            **common, "building_count": len(street_data), "data": street_data,
+        })
         save_json(OUT / "dtek-2a.json", {
             **common, "requested_building": TARGET_BUILDING,
-            "found": matched_key is not None, "matched_key": matched_key,
-            "data": street_data.get(matched_key) if matched_key is not None else None,
+            "found": True, "matched_key": matched_key, "record_state": target_record_state,
+            "data": target_data,
         })
         summary.update({
             "success": True,
             "saved_files": ["output/dtek-response.json", "output/dtek-street.json", "output/dtek-2a.json"],
-            "building_count": len(street_data), "target_building_found": matched_key is not None,
-            "target_building_key": matched_key, "updateTimestamp": update_timestamp,
+            "building_count": len(street_data), "target_building_found": True,
+            "target_building_key": matched_key, "target_record_state": target_record_state,
+            "updateTimestamp": update_timestamp,
             "top_level_keys": list(body.keys()),
         })
         print(f"OK: збережено {len(street_data)} записів по вулиці.")
-        if matched_key is not None:
-            print(f"OK: будинок {TARGET_BUILDING} знайдено під ключем {matched_key!r}.")
-        else:
-            print(f"WARNING: будинок {TARGET_BUILDING} не знайдено серед ключів відповіді.")
+        print(f"OK: будинок {TARGET_BUILDING} знайдено під ключем {matched_key!r}.")
+        if target_record_state == "source_fields_empty":
+            print("INFO: основні поля відключення порожні у відповіді DTEK; збережено без змін.")
         code = 0
     except Exception as exc:
         summary["error"] = f"{type(exc).__name__}: {exc}"
