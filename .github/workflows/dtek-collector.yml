@@ -2,9 +2,8 @@ name: DTEK — збір даних про відключення
 
 on:
   workflow_dispatch:
-  # Увімкніть після успішного ручного тесту:
-  # schedule:
-  #   - cron: "17 */2 * * *"
+  schedule:
+    - cron: "17 */2 * * *"
 
 permissions:
   contents: read
