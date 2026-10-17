@@ -296,6 +296,9 @@ def main():
             **common, "requested_building": TARGET_BUILDING,
             "found": True, "matched_key": matched_key, "record_state": target_record_state,
             "data": target_data, "group_schedule": group_schedule,
+            # Preserve the original DTEK factual schedule metadata without renaming.
+            "updateFact": body.get("updateFact"),
+            "fact": body.get("fact"),
         })
         timings["write_json_files"] = round(time.perf_counter() - stage_started, 3)
         summary.update({
