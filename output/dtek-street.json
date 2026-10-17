@@ -1,10 +1,21 @@
 {
   "street": "вул. Донця Михайла",
-  "updateTimestamp": "15:18 17.10.2026",
+  "updateTimestamp": "18:33 17.10.2026",
   "source_url": "https://www.dtek-kem.com.ua/ua/shutdowns",
   "building_count": 48,
   "data": {
     "13/А": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "19": {
       "sub_type": "",
       "start_date": "",
       "end_date": "",
@@ -37,28 +48,6 @@
       "voluntarily": null,
       "cek": null
     },
-    "19": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "23/Б": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
     "28": {
       "sub_type": "",
       "start_date": "",
@@ -81,183 +70,7 @@
       "voluntarily": null,
       "cek": null
     },
-    "20": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
     "14/В": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "13": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "21": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "13/Б": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "23/А": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "19/Б": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "26": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "11": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "14/Б": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "5": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV14.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "17/46": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "25/89": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "2/Б": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV14.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "14/А": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "3": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV14.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "23": {
       "sub_type": "",
       "start_date": "",
       "end_date": "",
@@ -279,7 +92,51 @@
       "voluntarily": null,
       "cek": null
     },
+    "23/Б": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "13": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
     "9": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "27/А": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "21": {
       "sub_type": "",
       "start_date": "",
       "end_date": "",
@@ -312,6 +169,39 @@
       "voluntarily": null,
       "cek": null
     },
+    "18/А": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "23/А": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "2А": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
     "18": {
       "sub_type": "",
       "start_date": "",
@@ -334,6 +224,72 @@
       "voluntarily": null,
       "cek": null
     },
+    "26": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "25/89": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "11": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "14/Б": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "2/Б": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV14.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "5": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV14.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
     "14": {
       "sub_type": "",
       "start_date": "",
@@ -345,7 +301,7 @@
       "voluntarily": null,
       "cek": null
     },
-    "27/А": {
+    "20": {
       "sub_type": "",
       "start_date": "",
       "end_date": "",
@@ -356,7 +312,7 @@
       "voluntarily": null,
       "cek": null
     },
-    "18/А": {
+    "13/Б": {
       "sub_type": "",
       "start_date": "",
       "end_date": "",
@@ -367,7 +323,51 @@
       "voluntarily": null,
       "cek": null
     },
-    "2А": {
+    "19/Б": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "17/46": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "3": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV14.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "14/А": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "23": {
       "sub_type": "",
       "start_date": "",
       "end_date": "",
