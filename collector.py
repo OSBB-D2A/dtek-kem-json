@@ -233,6 +233,24 @@ def main():
             ),
             None,
         )
+        # Keep only this building's GPV group in dtek-2a.json.
+        # Preserve DTEK's original fact metadata and timestamp keys.
+        source_fact = body.get("fact")
+        building_fact = None
+        if isinstance(source_fact, dict):
+            building_fact = {
+                key: value for key, value in source_fact.items() if key != "data"
+            }
+            source_fact_data = source_fact.get("data")
+            filtered_fact_data = {}
+            if isinstance(source_fact_data, dict) and group_code:
+                for date_key, groups in source_fact_data.items():
+                    if isinstance(groups, dict) and group_code in groups:
+                        filtered_fact_data[date_key] = {
+                            group_code: groups[group_code]
+                        }
+            building_fact["data"] = filtered_fact_data
+
         group_schedule = None
         if group_code:
             kyiv_tz = ZoneInfo("Europe/Kyiv")
@@ -298,7 +316,7 @@ def main():
             "data": target_data, "group_schedule": group_schedule,
             # Preserve the original DTEK factual schedule metadata without renaming.
             "updateFact": body.get("updateFact"),
-            "fact": body.get("fact"),
+            "fact": building_fact,
         })
         timings["write_json_files"] = round(time.perf_counter() - stage_started, 3)
         summary.update({
