@@ -19,9 +19,11 @@ jobs:
           python-version: "3.12"
           cache: pip
       - name: Install Python dependencies
-        run: /usr/bin/time -f 'TIMING: встановлення Python-залежностей: %e с' pip install -r requirements.txt
+        run: |
+          /usr/bin/time -f 'TIMING: встановлення Python-залежностей: %e с' pip install -r requirements.txt
       - name: Install Chromium for Playwright
-        run: /usr/bin/time -f 'TIMING: встановлення Chromium та системних залежностей: %e с' python -m playwright install --with-deps chromium
+        run: |
+          /usr/bin/time -f 'TIMING: встановлення Chromium та системних залежностей: %e с' python -m playwright install --with-deps chromium
       - name: Collect DTEK outage data
         env:
           DTEK_URL: https://www.dtek-kem.com.ua/ua/shutdowns
