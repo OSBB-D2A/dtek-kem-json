@@ -82,34 +82,48 @@ def fetch_street_data(page):
 
 
 def main():
+    run_started = time.perf_counter()
+    timings = {}
     checked_at = datetime.now(timezone.utc).isoformat()
     summary = {
         "checked_at_utc": checked_at, "url": PAGE_URL, "street": STREET,
         "target_building": TARGET_BUILDING,
         "method": "Playwright Chromium + same-origin AJAX", "success": False,
+        "timings_seconds": timings,
     }
     try:
         last_error = None
         body = None
+        stage_started = time.perf_counter()
         with sync_playwright() as p:
+            timings["playwright_startup"] = round(time.perf_counter() - stage_started, 3)
+            stage_started = time.perf_counter()
             browser = p.chromium.launch(headless=True)
+            timings["browser_launch"] = round(time.perf_counter() - stage_started, 3)
             try:
+                stage_started = time.perf_counter()
                 context = browser.new_context(
                     user_agent=("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
                                 "(KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"),
                     locale="uk-UA", timezone_id="Europe/Kyiv",
                 )
+                timings["browser_context_setup"] = round(time.perf_counter() - stage_started, 3)
                 for attempt in range(1, MAX_ATTEMPTS + 1):
                     page = context.new_page()
+                    attempt_started = time.perf_counter()
                     try:
                         print(f"INFO: завантаження сторінки, спроба {attempt}/{MAX_ATTEMPTS}")
+                        stage_started = time.perf_counter()
                         response = page.goto(PAGE_URL, wait_until="networkidle", timeout=120000)
+                        timings[f"attempt_{attempt}_page_navigation"] = round(time.perf_counter() - stage_started, 3)
                         summary["page_status_code"] = response.status if response else None
                         summary["final_url"] = page.url
+                        stage_started = time.perf_counter()
                         page.wait_for_timeout(500)
                         html = page.content()
                         summary["page_bytes"] = len(html.encode("utf-8"))
                         summary["page_title"] = page.title()
+                        timings[f"attempt_{attempt}_page_inspection"] = round(time.perf_counter() - stage_started, 3)
                         # Avoid scanning all HTML for generic words such as "captcha":
                         # they can occur in scripts or unrelated page assets.
                         if response and response.status >= 400:
@@ -117,7 +131,9 @@ def main():
                         if any(marker in page.title().lower() for marker in CHALLENGE_MARKERS):
                             raise RuntimeError("Заголовок сторінки вказує на CAPTCHA/WAF challenge.")
 
+                        stage_started = time.perf_counter()
                         ajax = fetch_street_data(page)
+                        timings[f"attempt_{attempt}_ajax_request"] = round(time.perf_counter() - stage_started, 3)
                         summary["ajax_status_code"] = ajax["status"]
                         summary["ajax_url"] = ajax["url"]
                         summary["content_type"] = ajax["contentType"]
@@ -125,6 +141,7 @@ def main():
                         summary["ajax_response_excerpt"] = re.sub(r"\s+", " ", ajax["text"][:500])
                         if ajax["status"] < 200 or ajax["status"] >= 300:
                             raise RuntimeError(f"AJAX повернув HTTP {ajax['status']}.")
+                        stage_started = time.perf_counter()
                         try:
                             parsed = json.loads(ajax["text"])
                         except ValueError as exc:
@@ -136,6 +153,7 @@ def main():
                             raise RuntimeError("DTEK повернув JSON без result: true.")
                         if not isinstance(parsed.get("data"), dict):
                             raise RuntimeError("У відповіді DTEK немає об'єкта data з переліком будинків.")
+                        timings[f"attempt_{attempt}_response_validation"] = round(time.perf_counter() - stage_started, 3)
                         body = parsed
                         summary["attempt"] = attempt
                         break
@@ -157,14 +175,19 @@ def main():
                         else:
                             time.sleep(2 * attempt)
                     finally:
+                        timings[f"attempt_{attempt}_total"] = round(time.perf_counter() - attempt_started, 3)
+                        print(f"TIMING: спроба {attempt}: {timings[f'attempt_{attempt}_total']:.3f} с")
                         page.close()
+                stage_started = time.perf_counter()
                 context.close()
+                timings["browser_context_close"] = round(time.perf_counter() - stage_started, 3)
             finally:
                 browser.close()
 
         if body is None:
             raise RuntimeError(last_error or "Не вдалося отримати дані DTEK.")
 
+        stage_started = time.perf_counter()
         street_data = body["data"]
         update_timestamp = body.get("updateTimestamp")
         common = {
@@ -191,6 +214,7 @@ def main():
                 f"Запис будинку {matched_key!r} має неочікуваний формат; попередні файли не перезаписано."
             )
         outage_fields = ("sub_type", "start_date", "end_date", "type")
+        timings["find_target_building"] = round(time.perf_counter() - stage_started, 3)
         target_record_state = (
             "source_fields_empty"
             if all(not str(target_data.get(field) or "").strip() for field in outage_fields)
@@ -199,6 +223,7 @@ def main():
 
         # Replace published data only after the response and target record are validated.
         # Empty DTEK fields are preserved as-is and are not treated as a collector error.
+        stage_started = time.perf_counter()
         save_json(OUT / "dtek-response.json", body)
         save_json(OUT / "dtek-street.json", {
             **common, "building_count": len(street_data), "data": street_data,
@@ -208,6 +233,7 @@ def main():
             "found": True, "matched_key": matched_key, "record_state": target_record_state,
             "data": target_data,
         })
+        timings["write_json_files"] = round(time.perf_counter() - stage_started, 3)
         summary.update({
             "success": True,
             "saved_files": ["output/dtek-response.json", "output/dtek-street.json", "output/dtek-2a.json"],
@@ -226,6 +252,10 @@ def main():
         print(f"ERROR: {summary['error']}", file=sys.stderr)
         code = 1
     finally:
+        timings["total_script"] = round(time.perf_counter() - run_started, 3)
+        print("TIMING: підсумок вимірювань (секунди):")
+        for label, seconds in timings.items():
+            print(f"TIMING: {label} = {seconds:.3f} с")
         save_json(OUT / "run-summary.json", summary)
     return code
 
