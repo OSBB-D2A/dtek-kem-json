@@ -63,10 +63,8 @@ jobs:
           street = json.loads((out / "dtek-street.json").read_text(encoding="utf-8"))
           building = json.loads((out / "dtek-2a.json").read_text(encoding="utf-8"))
 
-          # Remove volatile fetch time from the compact endpoint so unchanged
-          # source data does not trigger a commit every five minutes.
-          street.pop("checked_at_utc", None)
-          building.pop("checked_at_utc", None)
+          # Keep the collector timestamp in published JSON so consumers can
+          # distinguish a fresh successful check from unchanged source data.
 
           combined = {
               "source": "DTEK Kyiv Electricity Networks",
