@@ -19,9 +19,9 @@ jobs:
           python-version: "3.12"
           cache: pip
       - name: Install Python dependencies
-        run: pip install -r requirements.txt
+        run: /usr/bin/time -f 'TIMING: встановлення Python-залежностей: %e с' pip install -r requirements.txt
       - name: Install Chromium for Playwright
-        run: python -m playwright install --with-deps chromium
+        run: /usr/bin/time -f 'TIMING: встановлення Chromium та системних залежностей: %e с' python -m playwright install --with-deps chromium
       - name: Collect DTEK outage data
         env:
           DTEK_URL: https://www.dtek-kem.com.ua/ua/shutdowns
@@ -46,6 +46,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          SECONDS=0
+          trap 'echo "TIMING: підготовка об’єднаного JSON: ${SECONDS} с"' EXIT
           python - <<'PY'
           import json
           from pathlib import Path
@@ -87,6 +89,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          SECONDS=0
+          trap 'echo "TIMING: публікація JSON у main: ${SECONDS} с"' EXIT
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
