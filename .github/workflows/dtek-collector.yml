@@ -2,8 +2,7 @@ name: DTEK — збір даних про відключення
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "*/5 * * * *"
+
 
 permissions:
   contents: write
