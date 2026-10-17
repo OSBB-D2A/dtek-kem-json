@@ -27,7 +27,7 @@ jobs:
           key: ${{ runner.os }}-playwright-${{ hashFiles('requirements.txt') }}-v1
       - name: Install Chromium for Playwright
         run: |
-          /usr/bin/time -f 'TIMING: встановлення Chromium та системних залежностей: %e с' python -m playwright install --with-deps chromium
+          /usr/bin/time -f 'TIMING: встановлення Chromium: %e с' python -m playwright install chromium
       - name: Collect DTEK outage data
         env:
           DTEK_URL: https://www.dtek-kem.com.ua/ua/shutdowns
