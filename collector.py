@@ -4,7 +4,8 @@ import re
 import sys
 import time
 import unicodedata
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
@@ -221,6 +222,69 @@ def main():
             else "source_fields_present"
         )
 
+        # Add the schedule for the outage group assigned to this building.
+        # Prefer date-specific factual data; use the published weekday preset
+        # when no factual data exists for a date (commonly tomorrow).
+        group_code = next(
+            (
+                str(reason).strip()
+                for reason in (target_data.get("sub_type_reason") or [])
+                if str(reason).strip().startswith("GPV")
+            ),
+            None,
+        )
+        group_schedule = None
+        if group_code:
+            kyiv_tz = ZoneInfo("Europe/Kyiv")
+            today_timestamp = body.get("fact", {}).get("today")
+            if isinstance(today_timestamp, (int, float)):
+                today_date = datetime.fromtimestamp(
+                    today_timestamp, tz=timezone.utc
+                ).astimezone(kyiv_tz).date()
+            else:
+                today_date = datetime.now(kyiv_tz).date()
+            tomorrow_date = today_date + timedelta(days=1)
+
+            def schedule_for_date(schedule_date):
+                day_start = datetime.combine(
+                    schedule_date, datetime.min.time(), tzinfo=kyiv_tz
+                )
+                timestamp_key = str(int(day_start.timestamp()))
+                factual = (
+                    body.get("fact", {}).get("data", {})
+                    .get(timestamp_key, {}).get(group_code)
+                )
+                if isinstance(factual, dict):
+                    return {
+                        "date": schedule_date.isoformat(),
+                        "source": "fact",
+                        "hours": factual,
+                    }
+
+                weekday_key = str(schedule_date.isoweekday())
+                preset = (
+                    body.get("preset", {}).get("data", {})
+                    .get(group_code, {}).get(weekday_key)
+                )
+                if isinstance(preset, dict):
+                    return {
+                        "date": schedule_date.isoformat(),
+                        "source": "preset",
+                        "hours": preset,
+                    }
+                return {
+                    "date": schedule_date.isoformat(),
+                    "source": None,
+                    "hours": None,
+                }
+
+            group_schedule = {
+                "group": group_code,
+                "name": body.get("preset", {}).get("sch_names", {}).get(group_code),
+                "today": schedule_for_date(today_date),
+                "tomorrow": schedule_for_date(tomorrow_date),
+            }
+
         # Replace published data only after the response and target record are validated.
         # Empty DTEK fields are preserved as-is and are not treated as a collector error.
         stage_started = time.perf_counter()
@@ -231,7 +295,7 @@ def main():
         save_json(OUT / "dtek-2a.json", {
             **common, "requested_building": TARGET_BUILDING,
             "found": True, "matched_key": matched_key, "record_state": target_record_state,
-            "data": target_data,
+            "data": target_data, "group_schedule": group_schedule,
         })
         timings["write_json_files"] = round(time.perf_counter() - stage_started, 3)
         summary.update({
