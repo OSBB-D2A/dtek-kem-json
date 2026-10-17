@@ -38,9 +38,9 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
 
-      # Publish only after a successful collection. Data lives on a separate
-      # branch, not main. Force-add JSON because output/ is intentionally ignored
-      # by the repository's .gitignore on the data branch.
+      # Publish only after a successful collection. Source code, workflow, and
+      # published JSON all live on main. Force-add JSON because output/ is ignored
+      # by .gitignore; avoid checking out another branch while output files change.
       - name: Prepare combined JSON
         if: success()
         shell: bash
@@ -82,23 +82,17 @@ jobs:
           )
           PY
 
-      - name: Publish JSON to data branch
+      - name: Publish JSON to main
         if: success()
         shell: bash
         run: |
           set -euo pipefail
 
-          mkdir -p /tmp/dtek-publish
-          cp output/dtek-response.json output/dtek-street.json output/dtek-2a.json output/dtek.json /tmp/dtek-publish/
-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git fetch origin data
-          git checkout data
 
-          mkdir -p output
-          cp /tmp/dtek-publish/dtek-response.json /tmp/dtek-publish/dtek-street.json /tmp/dtek-publish/dtek-2a.json /tmp/dtek-publish/dtek.json output/
-
+          # Do not switch branches: collector.py has just written output/*.json.
+          # Publishing on main avoids checkout conflicts and keeps one branch.
           git add -f output/dtek-response.json output/dtek-street.json output/dtek-2a.json output/dtek.json
           if git diff --cached --quiet; then
             echo "Опубліковані дані не змінилися — новий коміт не створюємо."
@@ -106,4 +100,4 @@ jobs:
           fi
 
           git commit -m "Update published DTEK data"
-          git push origin data
+          git push origin main
