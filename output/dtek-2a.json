@@ -1,17 +1,17 @@
 {
-  "checked_at_utc": "2026-10-18T13:08:26.470466+00:00",
+  "checked_at_utc": "2026-10-18T19:23:51.472785+00:00",
   "street": "вул. Донця Михайла",
-  "updateTimestamp": "16:02 18.10.2026",
+  "updateTimestamp": "22:18 18.10.2026",
   "source_url": "https://www.dtek-kem.com.ua/ua/shutdowns",
   "requested_building": "2A",
   "found": true,
   "matched_key": "2А",
-  "record_state": "source_fields_empty",
+  "record_state": "source_fields_present",
   "data": {
-    "sub_type": "",
-    "start_date": "",
-    "end_date": "",
-    "type": "",
+    "sub_type": "Аварійні ремонтні роботи",
+    "start_date": "20:14 18.10.2026",
+    "end_date": "00:21 19.10.2026",
+    "type": "2",
     "sub_type_reason": [
       "GPV24.1"
     ],
@@ -53,7 +53,7 @@
     },
     "tomorrow": {
       "date": "2026-10-19",
-      "source": "preset",
+      "source": "fact",
       "hours": {
         "1": "yes",
         "2": "yes",
@@ -61,19 +61,19 @@
         "4": "yes",
         "5": "yes",
         "6": "yes",
-        "7": "yes",
-        "8": "yes",
-        "9": "yes",
-        "10": "yes",
+        "7": "no",
+        "8": "no",
+        "9": "no",
+        "10": "first",
         "11": "yes",
         "12": "yes",
         "13": "yes",
         "14": "yes",
         "15": "yes",
-        "16": "yes",
-        "17": "yes",
-        "18": "yes",
-        "19": "yes",
+        "16": "no",
+        "17": "no",
+        "18": "no",
+        "19": "first",
         "20": "yes",
         "21": "yes",
         "22": "yes",
@@ -84,7 +84,7 @@
   },
   "updateFact": null,
   "fact": {
-    "update": "18.10.2026 15:35",
+    "update": "18.10.2026 22:08",
     "today": 1792270800,
     "data": {
       "1792270800": {
@@ -113,6 +113,34 @@
           "22": "no",
           "23": "no",
           "24": "no"
+        }
+      },
+      "1792357200": {
+        "GPV24.1": {
+          "1": "yes",
+          "2": "yes",
+          "3": "yes",
+          "4": "yes",
+          "5": "yes",
+          "6": "yes",
+          "7": "no",
+          "8": "no",
+          "9": "no",
+          "10": "first",
+          "11": "yes",
+          "12": "yes",
+          "13": "yes",
+          "14": "yes",
+          "15": "yes",
+          "16": "no",
+          "17": "no",
+          "18": "no",
+          "19": "first",
+          "20": "yes",
+          "21": "yes",
+          "22": "yes",
+          "23": "yes",
+          "24": "yes"
         }
       }
     }
