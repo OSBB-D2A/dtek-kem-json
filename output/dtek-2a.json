@@ -1,17 +1,17 @@
 {
-  "checked_at_utc": "2026-10-18T19:23:51.472785+00:00",
+  "checked_at_utc": "2026-10-19T12:04:54.972318+00:00",
   "street": "вул. Донця Михайла",
-  "updateTimestamp": "22:18 18.10.2026",
+  "updateTimestamp": "15:01 19.10.2026",
   "source_url": "https://www.dtek-kem.com.ua/ua/shutdowns",
   "requested_building": "2A",
   "found": true,
   "matched_key": "2А",
-  "record_state": "source_fields_present",
+  "record_state": "source_fields_empty",
   "data": {
-    "sub_type": "Аварійні ремонтні роботи",
-    "start_date": "20:14 18.10.2026",
-    "end_date": "00:21 19.10.2026",
-    "type": "2",
+    "sub_type": "",
+    "start_date": "",
+    "end_date": "",
+    "type": "",
     "sub_type_reason": [
       "GPV24.1"
     ],
@@ -22,36 +22,6 @@
     "group": "GPV24.1",
     "name": "Черга 24.1",
     "today": {
-      "date": "2026-10-18",
-      "source": "fact",
-      "hours": {
-        "1": "yes",
-        "2": "yes",
-        "3": "yes",
-        "4": "yes",
-        "5": "yes",
-        "6": "yes",
-        "7": "yes",
-        "8": "yes",
-        "9": "yes",
-        "10": "yes",
-        "11": "yes",
-        "12": "yes",
-        "13": "yes",
-        "14": "yes",
-        "15": "yes",
-        "16": "second",
-        "17": "no",
-        "18": "no",
-        "19": "yes",
-        "20": "yes",
-        "21": "no",
-        "22": "no",
-        "23": "no",
-        "24": "no"
-      }
-    },
-    "tomorrow": {
       "date": "2026-10-19",
       "source": "fact",
       "hours": {
@@ -80,41 +50,43 @@
         "23": "yes",
         "24": "yes"
       }
+    },
+    "tomorrow": {
+      "date": "2026-10-20",
+      "source": "preset",
+      "hours": {
+        "1": "yes",
+        "2": "yes",
+        "3": "yes",
+        "4": "yes",
+        "5": "yes",
+        "6": "yes",
+        "7": "yes",
+        "8": "yes",
+        "9": "yes",
+        "10": "yes",
+        "11": "yes",
+        "12": "yes",
+        "13": "yes",
+        "14": "yes",
+        "15": "yes",
+        "16": "yes",
+        "17": "yes",
+        "18": "yes",
+        "19": "yes",
+        "20": "yes",
+        "21": "yes",
+        "22": "yes",
+        "23": "yes",
+        "24": "yes"
+      }
     }
   },
   "updateFact": null,
   "fact": {
     "update": "18.10.2026 22:08",
-    "today": 1792270800,
+    "today": 1792357200,
     "data": {
-      "1792270800": {
-        "GPV24.1": {
-          "1": "yes",
-          "2": "yes",
-          "3": "yes",
-          "4": "yes",
-          "5": "yes",
-          "6": "yes",
-          "7": "yes",
-          "8": "yes",
-          "9": "yes",
-          "10": "yes",
-          "11": "yes",
-          "12": "yes",
-          "13": "yes",
-          "14": "yes",
-          "15": "yes",
-          "16": "second",
-          "17": "no",
-          "18": "no",
-          "19": "yes",
-          "20": "yes",
-          "21": "no",
-          "22": "no",
-          "23": "no",
-          "24": "no"
-        }
-      },
       "1792357200": {
         "GPV24.1": {
           "1": "yes",

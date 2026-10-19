@@ -1,81 +1,15 @@
 {
-  "checked_at_utc": "2026-10-18T19:23:51.472785+00:00",
+  "checked_at_utc": "2026-10-19T12:04:54.972318+00:00",
   "street": "вул. Донця Михайла",
-  "updateTimestamp": "22:18 18.10.2026",
+  "updateTimestamp": "15:01 19.10.2026",
   "source_url": "https://www.dtek-kem.com.ua/ua/shutdowns",
   "building_count": 48,
   "data": {
-    "17/46": {
-      "sub_type": "Аварійні ремонтні роботи",
-      "start_date": "20:08 18.10.2026",
-      "end_date": "00:21 19.10.2026",
-      "type": "2",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "14": {
-      "sub_type": "Аварійні ремонтні роботи",
-      "start_date": "20:08 18.10.2026",
-      "end_date": "00:21 19.10.2026",
-      "type": "2",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "14/А": {
-      "sub_type": "Аварійні ремонтні роботи",
-      "start_date": "20:08 18.10.2026",
-      "end_date": "00:21 19.10.2026",
-      "type": "2",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "14/Б": {
-      "sub_type": "Аварійні ремонтні роботи",
-      "start_date": "20:08 18.10.2026",
-      "end_date": "00:21 19.10.2026",
-      "type": "2",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "14/В": {
-      "sub_type": "Аварійні ремонтні роботи",
-      "start_date": "20:08 18.10.2026",
-      "end_date": "00:21 19.10.2026",
-      "type": "2",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "12": {
-      "sub_type": "Аварійні ремонтні роботи",
-      "start_date": "20:08 18.10.2026",
-      "end_date": "00:21 19.10.2026",
-      "type": "2",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "18/Б": {
-      "sub_type": "Аварійні ремонтні роботи",
-      "start_date": "20:08 18.10.2026",
-      "end_date": "00:21 19.10.2026",
-      "type": "2",
+    "13/А": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
       "sub_type_reason": [
         "GPV24.1"
       ],
@@ -83,116 +17,6 @@
       "cek": null
     },
     "19": {
-      "sub_type": "Аварійні ремонтні роботи",
-      "start_date": "20:08 18.10.2026",
-      "end_date": "00:21 19.10.2026",
-      "type": "2",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "19/А": {
-      "sub_type": "Аварійні ремонтні роботи",
-      "start_date": "20:08 18.10.2026",
-      "end_date": "00:21 19.10.2026",
-      "type": "2",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "23": {
-      "sub_type": "Аварійні ремонтні роботи",
-      "start_date": "20:08 18.10.2026",
-      "end_date": "00:21 19.10.2026",
-      "type": "2",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "25/89": {
-      "sub_type": "Аварійні ремонтні роботи",
-      "start_date": "20:08 18.10.2026",
-      "end_date": "00:21 19.10.2026",
-      "type": "2",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "23/А": {
-      "sub_type": "Аварійні ремонтні роботи",
-      "start_date": "20:08 18.10.2026",
-      "end_date": "00:21 19.10.2026",
-      "type": "2",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "23/Б": {
-      "sub_type": "Аварійні ремонтні роботи",
-      "start_date": "20:08 18.10.2026",
-      "end_date": "00:21 19.10.2026",
-      "type": "2",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "21": {
-      "sub_type": "Аварійні ремонтні роботи",
-      "start_date": "20:08 18.10.2026",
-      "end_date": "00:21 19.10.2026",
-      "type": "2",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "21/А": {
-      "sub_type": "Аварійні ремонтні роботи",
-      "start_date": "20:08 18.10.2026",
-      "end_date": "00:21 19.10.2026",
-      "type": "2",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "19/Б": {
-      "sub_type": "Аварійні ремонтні роботи",
-      "start_date": "20:08 18.10.2026",
-      "end_date": "00:21 19.10.2026",
-      "type": "2",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "2А": {
-      "sub_type": "Аварійні ремонтні роботи",
-      "start_date": "20:14 18.10.2026",
-      "end_date": "00:21 19.10.2026",
-      "type": "2",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "13/А": {
       "sub_type": "",
       "start_date": "",
       "end_date": "",
@@ -236,7 +60,40 @@
       "voluntarily": null,
       "cek": null
     },
+    "12": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "14/В": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
     "27": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "23/Б": {
       "sub_type": "",
       "start_date": "",
       "end_date": "",
@@ -280,7 +137,62 @@
       "voluntarily": null,
       "cek": null
     },
+    "21": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "19/А": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "18/Б": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
     "18/А": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "23/А": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "2А": {
       "sub_type": "",
       "start_date": "",
       "end_date": "",
@@ -302,6 +214,17 @@
       "voluntarily": null,
       "cek": null
     },
+    "21/А": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
     "26": {
       "sub_type": "",
       "start_date": "",
@@ -313,7 +236,29 @@
       "voluntarily": null,
       "cek": null
     },
+    "25/89": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
     "11": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "14/Б": {
       "sub_type": "",
       "start_date": "",
       "end_date": "",
@@ -346,6 +291,17 @@
       "voluntarily": null,
       "cek": null
     },
+    "14": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
     "20": {
       "sub_type": "",
       "start_date": "",
@@ -368,6 +324,28 @@
       "voluntarily": null,
       "cek": null
     },
+    "19/Б": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "17/46": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
     "3": {
       "sub_type": "",
       "start_date": "",
@@ -375,6 +353,28 @@
       "type": "",
       "sub_type_reason": [
         "GPV14.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "14/А": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "23": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
       ],
       "voluntarily": null,
       "cek": null
