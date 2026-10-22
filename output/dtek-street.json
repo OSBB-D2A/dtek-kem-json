@@ -1,10 +1,43 @@
 {
-  "checked_at_utc": "2026-10-21T17:46:53.173859+00:00",
+  "checked_at_utc": "2026-10-22T13:20:51.536463+00:00",
   "street": "вул. Донця Михайла",
-  "updateTimestamp": "20:33 21.10.2026",
+  "updateTimestamp": "16:17 22.10.2026",
   "source_url": "https://www.dtek-kem.com.ua/ua/shutdowns",
   "building_count": 48,
   "data": {
+    "3": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "13:43 22.10.2026",
+      "end_date": "17:30 22.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV14.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "5": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "13:43 22.10.2026",
+      "end_date": "17:30 22.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV14.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "2/Б": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "13:43 22.10.2026",
+      "end_date": "17:30 22.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV14.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
     "13/А": {
       "sub_type": "",
       "start_date": "",
@@ -247,17 +280,6 @@
       "voluntarily": null,
       "cek": null
     },
-    "2/Б": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV14.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
     "18": {
       "sub_type": "",
       "start_date": "",
@@ -313,17 +335,6 @@
       "voluntarily": null,
       "cek": null
     },
-    "5": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV14.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
     "25/89": {
       "sub_type": "",
       "start_date": "",
@@ -364,17 +375,6 @@
       "type": "",
       "sub_type_reason": [
         "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "3": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV14.1"
       ],
       "voluntarily": null,
       "cek": null
