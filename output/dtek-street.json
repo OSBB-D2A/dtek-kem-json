@@ -1,14 +1,201 @@
 {
-  "checked_at_utc": "2026-10-22T13:20:51.536463+00:00",
+  "checked_at_utc": "2026-10-31T18:28:56.304288+00:00",
   "street": "вул. Донця Михайла",
-  "updateTimestamp": "16:17 22.10.2026",
+  "updateTimestamp": "20:19 31.10.2026",
   "source_url": "https://www.dtek-kem.com.ua/ua/shutdowns",
   "building_count": 48,
   "data": {
+    "17/46": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "14:48 31.10.2026",
+      "end_date": "23:15 31.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "14": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "14:48 31.10.2026",
+      "end_date": "23:15 31.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "14/А": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "14:48 31.10.2026",
+      "end_date": "23:15 31.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "14/Б": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "14:48 31.10.2026",
+      "end_date": "23:15 31.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "14/В": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "14:48 31.10.2026",
+      "end_date": "23:15 31.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "12": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "14:48 31.10.2026",
+      "end_date": "23:15 31.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "18/Б": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "14:48 31.10.2026",
+      "end_date": "23:15 31.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "19": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "14:48 31.10.2026",
+      "end_date": "23:15 31.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "19/А": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "14:48 31.10.2026",
+      "end_date": "23:15 31.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "23": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "14:48 31.10.2026",
+      "end_date": "23:15 31.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "25/89": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "14:48 31.10.2026",
+      "end_date": "23:15 31.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "23/А": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "14:48 31.10.2026",
+      "end_date": "23:15 31.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "23/Б": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "14:48 31.10.2026",
+      "end_date": "23:15 31.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "21": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "14:48 31.10.2026",
+      "end_date": "23:15 31.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "21/А": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "14:48 31.10.2026",
+      "end_date": "23:15 31.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "19/Б": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "14:48 31.10.2026",
+      "end_date": "23:15 31.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "2А": {
+      "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
+      "start_date": "14:56 31.10.2026",
+      "end_date": "23:15 31.10.2026",
+      "type": "2",
+      "sub_type_reason": [
+        "GPV24.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
     "3": {
       "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
-      "start_date": "13:43 22.10.2026",
-      "end_date": "17:30 22.10.2026",
+      "start_date": "15:44 31.10.2026",
+      "end_date": "21:30 31.10.2026",
       "type": "2",
       "sub_type_reason": [
         "GPV14.1"
@@ -18,8 +205,8 @@
     },
     "5": {
       "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
-      "start_date": "13:43 22.10.2026",
-      "end_date": "17:30 22.10.2026",
+      "start_date": "15:44 31.10.2026",
+      "end_date": "21:30 31.10.2026",
       "type": "2",
       "sub_type_reason": [
         "GPV14.1"
@@ -29,11 +216,22 @@
     },
     "2/Б": {
       "sub_type": "Стабілізаційне відключення (Згідно графіку погодинних відключень)",
-      "start_date": "13:43 22.10.2026",
-      "end_date": "17:30 22.10.2026",
+      "start_date": "15:44 31.10.2026",
+      "end_date": "21:30 31.10.2026",
       "type": "2",
       "sub_type_reason": [
         "GPV14.1"
+      ],
+      "voluntarily": null,
+      "cek": null
+    },
+    "7": {
+      "sub_type": "",
+      "start_date": "",
+      "end_date": "",
+      "type": "",
+      "sub_type_reason": [
+        "GPV24.1"
       ],
       "voluntarily": null,
       "cek": null
@@ -60,29 +258,7 @@
       "voluntarily": null,
       "cek": null
     },
-    "7": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "19": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "27/А": {
+    "28": {
       "sub_type": "",
       "start_date": "",
       "end_date": "",
@@ -104,29 +280,7 @@
       "voluntarily": null,
       "cek": null
     },
-    "23/Б": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "12": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "14/В": {
+    "27/А": {
       "sub_type": "",
       "start_date": "",
       "end_date": "",
@@ -148,29 +302,7 @@
       "voluntarily": null,
       "cek": null
     },
-    "2А": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "28": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "27": {
+    "13": {
       "sub_type": "",
       "start_date": "",
       "end_date": "",
@@ -192,73 +324,7 @@
       "voluntarily": null,
       "cek": null
     },
-    "19/Б": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "9": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "23/А": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "19/А": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "18/Б": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "14/А": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "13": {
+    "27": {
       "sub_type": "",
       "start_date": "",
       "end_date": "",
@@ -280,29 +346,7 @@
       "voluntarily": null,
       "cek": null
     },
-    "18": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "21/А": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "23": {
+    "9": {
       "sub_type": "",
       "start_date": "",
       "end_date": "",
@@ -324,51 +368,7 @@
       "voluntarily": null,
       "cek": null
     },
-    "14/Б": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "25/89": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "14": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "21": {
-      "sub_type": "",
-      "start_date": "",
-      "end_date": "",
-      "type": "",
-      "sub_type_reason": [
-        "GPV24.1"
-      ],
-      "voluntarily": null,
-      "cek": null
-    },
-    "17/46": {
+    "18": {
       "sub_type": "",
       "start_date": "",
       "end_date": "",
